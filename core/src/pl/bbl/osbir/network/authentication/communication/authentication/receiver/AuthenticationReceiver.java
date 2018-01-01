@@ -1,9 +1,9 @@
-package pl.bbl.osbir.network.authentication.communication.information.receiver;
+package pl.bbl.osbir.network.authentication.communication.authentication.receiver;
 
 import pl.bbl.network.client.AbstractClient;
 import pl.bbl.network.packet.Packet;
 import pl.bbl.network.server.handlers.PacketReceiver;
-import pl.bbl.osbir.network.authentication.communication.information.packets.AuthenticationPackets;
+import pl.bbl.osbir.network.authentication.communication.authentication.packets.AuthenticationPackets;
 
 public class AuthenticationReceiver extends PacketReceiver{
     public AuthenticationReceiver(String receiverType, AbstractClient abstractClient) {
