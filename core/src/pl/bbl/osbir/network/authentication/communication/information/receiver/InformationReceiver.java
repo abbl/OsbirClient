@@ -14,14 +14,6 @@ public class InformationReceiver extends PacketReceiver{
         return false;
     }
 
-    public void requestUserId(){
-
-    }
-
-    public void passUserId(){
-
-    }
-
     public void requestGameServerList(){
 
     }

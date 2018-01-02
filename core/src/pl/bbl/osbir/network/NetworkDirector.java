@@ -13,4 +13,8 @@ public class NetworkDirector {
     public AuthenticationConnectionWrapper establishAuthenticationServerConnection(){
         return authenticationConnectionWrapper.establishConnection();
     }
+
+    public AuthenticationConnectionWrapper getAuthenticationConnectionWrapper() {
+        return authenticationConnectionWrapper;
+    }
 }
