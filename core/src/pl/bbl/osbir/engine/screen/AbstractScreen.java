@@ -48,7 +48,6 @@ public abstract class AbstractScreen implements Screen {
     private void setupZipAssetManager(){
         zipAssetManager = new AssetManager(new ZipResolver());
         zipAssetManager.setLoader(ZipArchive.class, new ZipLoader(new InternalFileHandleResolver()));
-        zipAssetManager.load("assets.zip", ZipArchive.class);
     }
 
     @Override

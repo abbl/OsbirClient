@@ -1,0 +1,33 @@
+
+Windows.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+default-background
+  rotate: false
+  xy: 2, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+default-window
+  rotate: false
+  xy: 2, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
+
+Windows2.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+default-border
+  rotate: false
+  xy: 2, 2
+  size: 1536, 1536
+  orig: 1536, 1536
+  offset: 0, 0
+  index: -1
