@@ -9,14 +9,11 @@ import pl.bbl.osbir.screens.login.director.LoginDirector;
 public class LoginScreen extends AbstractScreen {
     private NetworkDirector networkDirector;
     private LoginDirector loginDirector;
-    private ZipLoader zipLoader;
 
     public LoginScreen(Game game) {
         super(game);
         networkDirector = new NetworkDirector();
         loginDirector = new LoginDirector();
-        zipLoader = new ZipLoader();
-        zipLoader.load("assets.zip");
     }
 
     @Override

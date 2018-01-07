@@ -1,25 +1,47 @@
 package pl.bbl.osbir.engine.loader.zip;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetLoaderParameters;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
+import pl.bbl.osbir.engine.tools.Strings;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class ZipLoader {
+public class ZipLoader extends AsynchronousAssetLoader<ZipArchive, ZipLoader.ZipParameters>{
     private ZipFile zipFile;
 
-    public void load(String path){
+    public ZipLoader(FileHandleResolver resolver) {
+        super(resolver);
+    }
+
+    @Override
+    public Array<AssetDescriptor> getDependencies(String fileName, FileHandle file, ZipParameters parameter) {
+        return null;
+    }
+
+    @Override
+    public void loadAsync(AssetManager manager, String fileName, FileHandle file, ZipParameters parameter) {
         try {
-            zipFile = new ZipFile(path);
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-            while(entries.hasMoreElements()){
-                ZipEntry zipEntry = entries.nextElement();
-                System.out.println("Zip:" + zipEntry.getName());
-            }
+            zipFile = new ZipFile(Strings.swapSlashesToMatchZipConvetion(fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+
+    @Override
+    public ZipArchive loadSync(AssetManager manager, String fileName, FileHandle file, ZipParameters parameter) {
+        ZipFile zipFile = this.zipFile;
+        this.zipFile = null;
+        return new ZipArchive(zipFile);
+    }
+
+
+    static class ZipParameters extends AssetLoaderParameters<ZipArchive>{}
 }
