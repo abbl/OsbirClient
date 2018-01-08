@@ -33,15 +33,12 @@ public class ZipLoader extends AsynchronousAssetLoader<ZipArchive, ZipLoader.Zip
         }
     }
 
-
-
     @Override
     public ZipArchive loadSync(AssetManager manager, String fileName, FileHandle file, ZipParameters parameter) {
         ZipFile zipFile = this.zipFile;
         this.zipFile = null;
         return new ZipArchive(zipFile);
     }
-
 
     static class ZipParameters extends AssetLoaderParameters<ZipArchive>{}
 }

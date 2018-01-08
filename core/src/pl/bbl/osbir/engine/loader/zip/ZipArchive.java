@@ -23,4 +23,11 @@ public class ZipArchive {
         }
         return null;
     }
+
+    public void printEntries(){
+        while(entries.hasMoreElements()){
+            ZipEntry zipEntry = entries.nextElement();
+            System.out.println(zipEntry.getName());
+        }
+    }
 }

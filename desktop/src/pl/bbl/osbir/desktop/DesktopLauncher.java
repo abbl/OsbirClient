@@ -5,10 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
 import pl.bbl.osbir.OsbirGame;
-
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
 
 public class DesktopLauncher {
     private static Settings settings;
