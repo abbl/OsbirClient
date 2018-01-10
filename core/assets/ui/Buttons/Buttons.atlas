@@ -1,0 +1,48 @@
+
+Buttons.png
+size: 2048,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+character-selection
+  rotate: false
+  xy: 2, 68
+  size: 192, 81
+  orig: 192, 81
+  offset: 0, 0
+  index: -1
+confirm
+  rotate: false
+  xy: 2, 151
+  size: 500, 350
+  orig: 500, 350
+  offset: 0, 0
+  index: -1
+confirm-checked
+  rotate: false
+  xy: 1006, 201
+  size: 500, 300
+  orig: 500, 300
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 504, 151
+  size: 500, 350
+  orig: 500, 350
+  offset: 0, 0
+  index: -1
+play-checked
+  rotate: false
+  xy: 1508, 201
+  size: 500, 300
+  orig: 500, 300
+  offset: 0, 0
+  index: -1
+start
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

@@ -10,15 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import pl.bbl.osbir.engine.loader.zip.ZipArchive;
-import pl.bbl.osbir.engine.loader.zip.ZipLoader;
-import pl.bbl.osbir.engine.loader.zip.ZipResolver;
 import pl.bbl.osbir.properties.OsbirProperties;
 
-import java.util.zip.ZipEntry;
-
 public abstract class AbstractScreen implements Screen {
-    protected AssetManager zipAssetManager;
     protected AssetManager assetManager;
     protected OrthographicCamera orthographicCamera;
     protected OsbirProperties osbirProperties;
@@ -34,7 +28,6 @@ public abstract class AbstractScreen implements Screen {
         spriteBatch = new SpriteBatch();
         setupStage();
         setupCamera();
-        setupZipAssetManager();
     }
 
     private void setupCamera(){
@@ -45,10 +38,6 @@ public abstract class AbstractScreen implements Screen {
         stage = new Stage(new StretchViewport(osbirProperties.getViewportWidth(), osbirProperties.getViewportHeight()));
     }
 
-    private void setupZipAssetManager(){
-        zipAssetManager = new AssetManager(new ZipResolver());
-        zipAssetManager.setLoader(ZipArchive.class, new ZipLoader(new InternalFileHandleResolver()));
-    }
 
     @Override
     public void show() {
@@ -59,7 +48,6 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        zipAssetManager.update();
         assetManager.update();
         update();
         spriteBatch.begin();

@@ -1,0 +1,35 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: textures/fonts/default.fnt } },
+com.badlogic.gdx.graphics.Color: {
+	green: { a: 1, b: 0, g: 1, r: 0 },
+	white: { a: 1, b: 1, g: 1, r: 1 },
+	red: { a: 1, b: 0, g: 0, r: 1 },
+	black: { a: 1, b: 0, g: 0, r: 0 },
+},
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: { down: play-checked, up: play },
+        confirm: { down: confirm-checked, up: confirm},
+        characterSelect: {down: character-selection, up: character-selection},
+        start: { down: start, up: start},
+},
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: { font: default-font, background: default-input, fontColor: white },
+},
+
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+        default: { down: confirm, up: confirm-checked, font: default-font},
+},
+
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: { titleFont: default-font, background: default-background, titleFontColor: white},
+},
+
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: { font: default-font, fontColor: white},
+},
+
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+        default: {font: default-font, fontColorSelected: red, fontColorUnselected: white, selection: default-selection}
+}
+}
+

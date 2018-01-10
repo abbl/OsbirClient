@@ -1,14 +1,11 @@
 package pl.bbl.osbir.engine.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import pl.bbl.osbir.engine.loader.zip.ZipArchive;
-
-import java.util.zip.ZipEntry;
 
 public class UserInterfaceManager {
-    private static final String UI_ARCHIVE_PATH = "data/ui.zip";
     private static final String UI_SKIN_PATH = "ui/skin.json";
     private static final String[] UI_COMPONENTS_PATH = {
             "ui/Buttons/Buttons.atlas",
@@ -18,19 +15,23 @@ public class UserInterfaceManager {
             "ui/Windows/Windows.atlas"
     };
 
-    private ZipArchive userInterfaceZipArchive;
-    private AssetManager zipAssetManager;
     private AssetManager assetManager;
     private Skin skin;
 
-    public UserInterfaceManager(AssetManager zipAssetManager, AssetManager assetManager){
-        this.zipAssetManager = zipAssetManager;
+    public UserInterfaceManager(AssetManager assetManager){
         this.assetManager = assetManager;
+        skin = new Skin();
         loadDependencies();
     }
 
     private void loadDependencies(){
-        zipAssetManager.load(UI_ARCHIVE_PATH, ZipArchive.class);
+        loadUIComponents();
+    }
+
+    private void loadUIComponents(){
+        for(String filePath : UI_COMPONENTS_PATH){
+            assetManager.load(filePath, TextureAtlas.class);
+        }
     }
 
     public void update(){
@@ -38,23 +39,21 @@ public class UserInterfaceManager {
     }
 
     private void assignDependencies(){
-        if(zipAssetManager.isLoaded(UI_ARCHIVE_PATH)){
-            userInterfaceZipArchive = zipAssetManager.get(UI_ARCHIVE_PATH);
-            loadAtlases();
+        for(String filePath : UI_COMPONENTS_PATH){
+            if(!assetManager.isLoaded(filePath))
+                return;
         }
+        loadSkin();
     }
 
-    private void loadAtlases(){
-        for(String path : UI_COMPONENTS_PATH){
-            ZipEntry zipEntry = userInterfaceZipArchive.getEntry(path);
-            if(zipEntry != null){
-                System.out.println(zipEntry.getName());
-                assetManager.load(zipEntry.getName(), TextureAtlas.class);
-            }
+    private void loadSkin(){
+        for(String filePath : UI_COMPONENTS_PATH){
+            skin.addRegions(assetManager.get(filePath, TextureAtlas.class));
         }
+        skin.load(Gdx.files.internal(UI_SKIN_PATH));
     }
 
     public void dispose(){
-        zipAssetManager.unload(UI_ARCHIVE_PATH);
+
     }
 }
