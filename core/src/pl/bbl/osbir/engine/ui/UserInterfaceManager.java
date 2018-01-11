@@ -14,7 +14,6 @@ public class UserInterfaceManager {
             "ui/TextFields/TextFields.atlas",
             "ui/Windows/Windows.atlas"
     };
-
     private AssetManager assetManager;
     private Skin skin;
     private boolean isDependenciesLoadingDone = false;
@@ -54,6 +53,14 @@ public class UserInterfaceManager {
         }
         skin.load(Gdx.files.internal(UI_SKIN_PATH));
         isDependenciesLoadingDone = true;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public boolean isDependenciesLoadingDone() {
+        return isDependenciesLoadingDone;
     }
 
     public void dispose(){

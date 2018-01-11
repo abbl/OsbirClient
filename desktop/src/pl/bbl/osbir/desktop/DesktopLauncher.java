@@ -5,6 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
 import pl.bbl.osbir.OsbirGame;
+import pl.bbl.osbir.properties.OsbirProperties;
+
 import java.io.File;
 import java.io.FilenameFilter;
 
@@ -17,6 +19,8 @@ public class DesktopLauncher {
         settings.maxHeight = 2048;
         //startTexturePacker();
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.width = (int) OsbirProperties.getViewportWidth();
+        config.height = (int) OsbirProperties.getViewportHeight();
 		new LwjglApplication(new OsbirGame(), config);
 	}
 
