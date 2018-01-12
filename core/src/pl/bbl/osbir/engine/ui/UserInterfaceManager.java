@@ -22,6 +22,8 @@ public class UserInterfaceManager {
         this.assetManager = assetManager;
         skin = new Skin();
         loadDependencies();
+        assetManager.finishLoading();
+        loadSkin();
     }
 
     private void loadDependencies(){
@@ -32,19 +34,6 @@ public class UserInterfaceManager {
         for(String filePath : UI_COMPONENTS_PATH){
             assetManager.load(filePath, TextureAtlas.class);
         }
-    }
-
-    public void update(){
-        if(!isDependenciesLoadingDone)
-            assignDependencies();
-    }
-
-    private void assignDependencies(){
-        for(String filePath : UI_COMPONENTS_PATH){
-            if(!assetManager.isLoaded(filePath))
-                return;
-        }
-        loadSkin();
     }
 
     private void loadSkin(){
@@ -59,11 +48,7 @@ public class UserInterfaceManager {
         return skin;
     }
 
-    public boolean isDependenciesLoadingDone() {
-        return isDependenciesLoadingDone;
-    }
-
     public void dispose(){
-
+        //TO DO UUUU
     }
 }

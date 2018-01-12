@@ -18,7 +18,7 @@ public class LoginLayout {
     private TextField[] textFields; //0 login 1 password
     private TextureRegion background;
 
-    LoginLayout(Skin skin, AssetManager assetManager){
+    public LoginLayout(Skin skin, AssetManager assetManager){
         stageTable = new Table();
         this.skin = skin;
         this.assetManager = assetManager;
@@ -32,6 +32,9 @@ public class LoginLayout {
 
     private void loadBackground(){
         assetManager.load(backgroundLocation, TextureAtlas.class);
+        assetManager.finishLoading();
+        TextureAtlas textureAtlas = assetManager.get(backgroundLocation);
+        background = textureAtlas.findRegion("background");
     }
 
     private void initializeTextFields(){
@@ -51,17 +54,6 @@ public class LoginLayout {
     public void render(SpriteBatch spriteBatch){
         if(background != null)
             spriteBatch.draw(background, 0, 0);
-    }
-
-    public void update(){
-        isBackgroundLoaded();
-    }
-
-    private void isBackgroundLoaded(){
-        if(assetManager.isLoaded(backgroundLocation) && background == null){
-            TextureAtlas textureAtlas = assetManager.get(backgroundLocation);
-            background = textureAtlas.findRegion("background");
-        }
     }
 
     public Table getStageTable(){
