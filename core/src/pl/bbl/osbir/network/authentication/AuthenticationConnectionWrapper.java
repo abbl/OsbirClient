@@ -7,19 +7,21 @@ import pl.bbl.osbir.network.authentication.receivers.AuthenticationReceivers;
 import pl.bbl.osbir.properties.OsbirProperties;
 
 public class AuthenticationConnectionWrapper {
+    private OsbirProperties osbirProperties;
     private AuthenticationConnection authenticationConnection;
     private Thread thread;
 
     public AuthenticationConnectionWrapper(OsbirProperties osbirProperties){
-        initializeConnection(osbirProperties);
+        this.osbirProperties = osbirProperties;
     }
 
-    private void initializeConnection(OsbirProperties osbirProperties){
+    private void initializeConnection(){
         authenticationConnection = new AuthenticationConnection(osbirProperties.getAuthenticationServerHost(), osbirProperties.getAuthenticationServerPort());
         thread = new Thread(authenticationConnection);
     }
 
     public AuthenticationConnectionWrapper establishConnection(){
+        initializeConnection();
         thread.start();
         return this;
     }
@@ -30,5 +32,9 @@ public class AuthenticationConnectionWrapper {
 
     public InformationReceiver getInformationReceiver(){
         return (InformationReceiver) authenticationConnection.getPacketReceiver(AuthenticationReceivers.INFORMATION_RECEIVER);
+    }
+
+    public boolean isConnected(){
+        return authenticationConnection != null && authenticationConnection.isConnected();
     }
 }

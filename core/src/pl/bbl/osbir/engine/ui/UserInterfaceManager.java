@@ -2,7 +2,9 @@ package pl.bbl.osbir.engine.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class UserInterfaceManager {
@@ -28,12 +30,22 @@ public class UserInterfaceManager {
 
     private void loadDependencies(){
         loadUIComponents();
+        loadFonts();
     }
 
     private void loadUIComponents(){
         for(String filePath : UI_COMPONENTS_PATH){
             assetManager.load(filePath, TextureAtlas.class);
         }
+    }
+
+    private void loadFonts(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("textures/fonts/default.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 24;
+        BitmapFont font = generator.generateFont(parameter);
+        skin.add("defaultFont", font);
+        generator.dispose();
     }
 
     private void loadSkin(){

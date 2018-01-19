@@ -25,4 +25,5 @@ public class AuthenticationConnection extends AbstractClient{
     public PacketReceiver getPacketReceiver(String receiverType){
         return packetHandler.getReceiver(receiverType);
     }
+
 }

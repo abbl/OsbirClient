@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import pl.bbl.osbir.properties.OsbirProperties;
+
 
 public abstract class AbstractScreen implements Screen {
     protected AssetManager assetManager;
@@ -18,6 +20,7 @@ public abstract class AbstractScreen implements Screen {
     protected OsbirProperties osbirProperties;
     protected SpriteBatch spriteBatch;
     protected Stage stage;
+    protected Stack actors;
     protected final Game game;
 
     public AbstractScreen(final Game game){
@@ -36,8 +39,10 @@ public abstract class AbstractScreen implements Screen {
 
     private void setupStage(){
         stage = new Stage(new StretchViewport(osbirProperties.getViewportWidth(), osbirProperties.getViewportHeight()));
+        actors = new Stack();
+        actors.setFillParent(true);
+        stage.addActor(actors);
     }
-
 
     @Override
     public void show() {

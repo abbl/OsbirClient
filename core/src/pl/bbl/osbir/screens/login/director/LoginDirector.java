@@ -2,37 +2,27 @@ package pl.bbl.osbir.screens.login.director;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import pl.bbl.osbir.network.NetworkDirector;
-import pl.bbl.osbir.screens.login.ui.LoginLayout;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import pl.bbl.osbir.engine.ui.UserInterfaceManager;
+import pl.bbl.osbir.screens.login.director.ui.LoginScreenLayout;
 
 public class LoginDirector {
-    private LoginLayout loginLayout;
-    private NetworkDirector networkDirector;
+    private UserInterfaceManager userInterfaceManager;
+    private LoginScreenLayout loginScreenLayout;
 
-    public LoginDirector(Stage stage, Skin skin, AssetManager assetManager){
-        loginLayout = new LoginLayout(skin, assetManager);
-        stage.addActor(loginLayout.getStageTable());
+    public LoginDirector(Stack mainStack, AssetManager assetManager){
+        this.userInterfaceManager = new UserInterfaceManager(assetManager);
+        this.loginScreenLayout = new LoginScreenLayout(mainStack, userInterfaceManager.getSkin(), assetManager, this);
     }
 
-    public void establishAuthServerConnection(){
-
-    }
-
-    public void establishGameServerConnection(){
-
+    public void startLoginProcess(String login, String password) {
     }
 
     public void render(SpriteBatch spriteBatch){
-        loginLayout.render(spriteBatch);
+        loginScreenLayout.render(spriteBatch);
     }
 
-    public void update(){
-
-    }
-
-    public void loginButtonClicked(){
+    public void dispose() {
 
     }
 }

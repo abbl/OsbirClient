@@ -6,12 +6,16 @@ import pl.bbl.osbir.properties.OsbirProperties;
 public class NetworkDirector {
     private AuthenticationConnectionWrapper authenticationConnectionWrapper;
 
-    public NetworkDirector(){
+    public NetworkDirector() {
         authenticationConnectionWrapper = new AuthenticationConnectionWrapper(new OsbirProperties());
     }
 
-    public AuthenticationConnectionWrapper establishAuthenticationServerConnection(){
-        return authenticationConnectionWrapper.establishConnection();
+    public void establishAuthenticationServerConnection() {
+        authenticationConnectionWrapper.establishConnection();
+    }
+
+    public boolean isAuthenticationConnectionEstablished() {
+        return authenticationConnectionWrapper != null && authenticationConnectionWrapper.isConnected();
     }
 
     public AuthenticationConnectionWrapper getAuthenticationConnectionWrapper() {

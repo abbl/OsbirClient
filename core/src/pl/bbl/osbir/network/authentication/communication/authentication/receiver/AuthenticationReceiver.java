@@ -6,6 +6,9 @@ import pl.bbl.network.server.handlers.PacketReceiver;
 import pl.bbl.osbir.network.authentication.communication.authentication.packets.AuthenticationPackets;
 
 public class AuthenticationReceiver extends PacketReceiver{
+    private boolean isAuthenticationResultReceived = false;
+    private boolean authenticationResult = false;
+
     public AuthenticationReceiver(String receiverType, AbstractClient abstractClient) {
         super(receiverType, abstractClient);
     }
@@ -14,7 +17,8 @@ public class AuthenticationReceiver extends PacketReceiver{
     public boolean receive(Packet packet) {
         switch (packet.packetPurpose){
             case "AUTHENTICATION_RESULT":
-                passLoginResult((Boolean) packet.getData("result"));
+                isAuthenticationResultReceived = true;
+                authenticationResult = (Boolean) packet.getData("result");
         }
         return false;
     }
@@ -23,7 +27,11 @@ public class AuthenticationReceiver extends PacketReceiver{
         abstractClient.write(AuthenticationPackets.requestLogin(login, password));
     }
 
-    public void passLoginResult(boolean result){
+    public boolean isAuthenticationResultReceived() {
+        return isAuthenticationResultReceived;
+    }
 
+    public boolean getAuthenticationResult() {
+        return authenticationResult;
     }
 }
