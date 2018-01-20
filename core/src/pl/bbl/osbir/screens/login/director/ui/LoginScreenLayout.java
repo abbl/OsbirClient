@@ -28,8 +28,10 @@ public class LoginScreenLayout {
     private Table windowTable;
     private TextWindow connectingMessageWindow;
     private TextWindow requestingServersMessageWindow;
+    private TextWindow loggingInWindow;
     private TextDialog loginFailureDialog;
 
+    private TextureAtlas loginScreenAtlas;
     private TextureRegion background;
 
     public LoginScreenLayout(Stack mainStack, Skin skin, AssetManager assetManager, LoginDirector loginDirector){
@@ -46,12 +48,15 @@ public class LoginScreenLayout {
         loginComponentsTable = new Table();
         login = new DefaultTextField("", skin);
         password = new DefaultTextField("", skin);
+        password.setPasswordMode(true);
+        password.setPasswordCharacter('*');
         confirm = new Button(skin, "confirm");
 
         windowTable = new Table();
         connectingMessageWindow = new TextWindow("", skin, "Connecting...");
+        loggingInWindow = new TextWindow("", skin, "Logging in...");
         requestingServersMessageWindow = new TextWindow("", skin, "Requesting server list...");
-        loginFailureDialog = new TextDialog("", skin, "Your login credentials are probably wrong.", 500, 300);
+        loginFailureDialog = new TextDialog("", skin, "Your login credentials are probably wrong.", 500, 150);
     }
 
     private void addChangeListenerToConfirmButton(){
@@ -78,27 +83,38 @@ public class LoginScreenLayout {
 
         assetManager.load(atlasLocation, TextureAtlas.class);
         assetManager.finishLoading();
-        TextureAtlas loginScreenAtlas = assetManager.get(atlasLocation, TextureAtlas.class);
+        loginScreenAtlas = assetManager.get(atlasLocation, TextureAtlas.class);
         background = loginScreenAtlas.findRegion("background");
     }
 
     public void displayConnectingWindow(){
-        windowTable.add(connectingMessageWindow).width(500).height(300);
+        windowTable.add(connectingMessageWindow).width(500).height(150);
     }
 
     public void hideConnectingWindow(){
+        windowTable.clearChildren();
         windowTable.removeActor(connectingMessageWindow);
     }
 
+    public void displayLoggingInWindow(){
+        windowTable.add(loggingInWindow).width(500).height(150);
+    }
+
+    public void hideLoggingInWindow(){
+        windowTable.clearChildren();
+        windowTable.removeActor(loggingInWindow);
+    }
+
     public void displayLoginFailureDialog(){
-        windowTable.add(loginFailureDialog).width(500).height(300);
+        windowTable.add(loginFailureDialog).width(500).height(150);
     }
 
     public void displayRequestingServerListWindow(){
-        windowTable.add(requestingServersMessageWindow).width(500).height(300);
+        windowTable.add(requestingServersMessageWindow).width(500).height(150);
     }
 
     public void hideRequestingServerListWindow(){
+        windowTable.clearChildren();
         windowTable.removeActor(requestingServersMessageWindow);
     }
 
@@ -107,6 +123,6 @@ public class LoginScreenLayout {
     }
 
     public void dispose(){
-
+        loginScreenAtlas.dispose();
     }
 }
