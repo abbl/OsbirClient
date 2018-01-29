@@ -5,21 +5,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import pl.bbl.osbir.engine.tools.ConditionalTrigger;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
-import pl.bbl.osbir.network.NetworkDirector;
-import pl.bbl.osbir.network.authentication.communication.authentication.receiver.AuthenticationReceiver;
 import pl.bbl.osbir.screens.login.director.ui.LoginScreenLayout;
 
 public class LoginDirector {
     private LoginScreenLayout loginScreenLayout;
-    private NetworkDirector networkDirector;
 
-    public LoginDirector(Stack mainStack, AssetManager assetManager, UserInterfaceManager userInterfaceManager, NetworkDirector networkDirector){
+    public LoginDirector(Stack mainStack, AssetManager assetManager, UserInterfaceManager userInterfaceManager){
         this.loginScreenLayout = new LoginScreenLayout(mainStack, userInterfaceManager.getSkin(), assetManager, this);
-        this.networkDirector = networkDirector;
     }
 
     public void startLoginProcess(String login, String password) {
-        networkDirector.establishAuthenticationServerConnection();
         loginScreenLayout.displayConnectingWindow();
         requestAuthenticationAfterConnectionIsEstablished(login, password).start();
     }
@@ -28,7 +23,7 @@ public class LoginDirector {
         return new ConditionalTrigger(){
             @Override
             protected boolean isConditionTrue() {
-                return networkDirector.isAuthenticationConnectionEstablished();
+                return false;
             }
 
             @Override
@@ -41,21 +36,10 @@ public class LoginDirector {
 
     private void requestLogin(String login, String password){
         loginScreenLayout.displayLoggingInWindow();
-        networkDirector.getAuthenticationConnectionWrapper().getAuthenticationReceiver().requestLoginProcess(login, password);
     }
 
     private void listenForLoginResult(){
-        if(networkDirector.isAuthenticationConnectionEstablished()){
-            AuthenticationReceiver authenticationReceiver = networkDirector.getAuthenticationConnectionWrapper().getAuthenticationReceiver();
-            if(authenticationReceiver.isAuthenticationResultReceived()){
-                loginScreenLayout.hideLoggingInWindow();
-                if(authenticationReceiver.getAuthenticationResult()){
-                    loginScreenLayout.displayRequestingServerListWindow();
-                }else{
-                    loginScreenLayout.displayLoginFailureDialog();
-                }
-            }
-        }
+
     }
 
     public void render(SpriteBatch spriteBatch){

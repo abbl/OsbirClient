@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class OsbirProperties implements Serializable{
     private String authenticationServerHost = "localhost";
     private int authenticationServerPort = 9987;
-    private static float viewportWidth = 1920;
-    private static float viewportHeight = 1080;
+    private static float viewportWidth = 1024;
+    private static float viewportHeight = 720;
 
     public OsbirProperties(){
 
