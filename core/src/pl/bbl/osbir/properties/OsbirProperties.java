@@ -3,28 +3,16 @@ package pl.bbl.osbir.properties;
 import java.io.Serializable;
 
 public class OsbirProperties implements Serializable{
-    private String authenticationServerHost = "localhost";
-    private int authenticationServerPort = 9987;
+    private static String authenticationServerHost = "localhost";
+    private static int authenticationServerPort = 9987;
     private static float viewportWidth = 1024;
     private static float viewportHeight = 720;
 
-    public OsbirProperties(){
-
-    }
-
-    public void importProperties(){
-
-    }
-
-    public void exportProperties(){
-
-    }
-
-    public String getAuthenticationServerHost() {
+    public static String getAuthenticationServerHost() {
         return authenticationServerHost;
     }
 
-    public int getAuthenticationServerPort() {
+    public static int getAuthenticationServerPort() {
         return authenticationServerPort;
     }
 

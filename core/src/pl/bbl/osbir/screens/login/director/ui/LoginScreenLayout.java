@@ -56,7 +56,7 @@ public class LoginScreenLayout {
         connectingMessageWindow = new TextWindow("", skin, "Connecting...");
         loggingInWindow = new TextWindow("", skin, "Logging in...");
         requestingServersMessageWindow = new TextWindow("", skin, "Requesting server list...");
-        loginFailureDialog = new TextDialog("", skin, "Your login credentials are probably wrong.", 500, 150);
+        loginFailureDialog = new TextDialog("", skin, "Your authentication credentials are probably wrong.", 500, 150);
     }
 
     private void addChangeListenerToConfirmButton(){

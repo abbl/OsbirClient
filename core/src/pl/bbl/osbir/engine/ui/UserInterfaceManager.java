@@ -60,6 +60,9 @@ public class UserInterfaceManager {
         return skin;
     }
 
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
     public void dispose(){
         //TO DO UUUU
     }
