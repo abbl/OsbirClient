@@ -9,6 +9,7 @@ import pl.bbl.osbir.network.NetworkDirector;
 import pl.bbl.osbir.player.Player;
 import pl.bbl.osbir.screens.login.director.LoginDirector;
 import pl.bbl.osbir.screens.login.network.receivers.authentication.AuthenticationPacketReceiver;
+import pl.bbl.osbir.screens.login.network.receivers.information.UserInformationReceiver;
 
 public class LoginScreen extends AbstractScreen {
     private NetworkDirector networkDirector;
@@ -26,6 +27,7 @@ public class LoginScreen extends AbstractScreen {
     private void initializePacketReceivers(){
         PacketDistributor packetDistributor = new PacketDistributor();
         packetDistributor.registerPacketReceiver(new AuthenticationPacketReceiver(loginDirector));
+        packetDistributor.registerPacketReceiver(new UserInformationReceiver(loginDirector));
         networkDirector.setAuthenticationPacketDistributor(packetDistributor);
     }
 

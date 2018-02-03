@@ -24,4 +24,8 @@ public class DefaultListDialog extends Dialog{
         getButtonTable().defaults().width(75).height(75);
         button(new Button(getSkin(), "confirm"));
     }
+
+    public Object getSelection(){
+        return list.getSelection();
+    }
 }

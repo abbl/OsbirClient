@@ -4,9 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import pl.bbl.osbir.engine.tools.ConditionalTrigger;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
+import pl.bbl.osbir.gameserver.GameServer;
 import pl.bbl.osbir.network.NetworkDirector;
 import pl.bbl.osbir.screens.login.director.ui.LoginScreenLayout;
 import pl.bbl.osbir.screens.login.network.packets.AuthenticationPackets;
+import pl.bbl.osbir.screens.login.network.packets.InformationPackets;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LoginDirector {
     private LoginScreenLayout layout;
@@ -44,13 +49,28 @@ public class LoginDirector {
     }
 
     public void receiveAuthenticationResult(boolean result) {
+        layout.hideLoggingInWindow();
         if(result){
-            layout.hideLoggingInWindow();
-            layout.displayRequestingServerListWindow(); //////////////////REQUEST GAMESERVER LIST HERE.
+            layout.displayRequestingServerListWindow();
+            networkDirector.getAuthenticationConnectionWrapper().sendPacket(InformationPackets.requestGameServerList());
         }else{
             layout.displayLoginFailureDialog();
             networkDirector.closeAuthenticationConnection();
         }
+    }
+
+    public void receiveGameServerList(ArrayList<HashMap<String, String>> gameserverList) {
+        layout.hideRequestingServerListWindow();
+        ArrayList<GameServer> gameServers = new ArrayList<>();
+
+        for(HashMap<String , String> server : gameserverList){
+            gameServers.add(new GameServer(server.get("name"), server.get("host"), Integer.parseInt(server.get("port"))));
+        }
+        layout.displayGameServerSelection(gameServers.toArray(new GameServer[gameServers.size()]));
+    }
+
+    public void receiveSelectedServer(Object object) {
+
     }
 
     public void render(SpriteBatch spriteBatch){

@@ -11,14 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import pl.bbl.osbir.engine.ui.dialog.TextDialog;
+import pl.bbl.osbir.engine.ui.list.DefaultListDialog;
 import pl.bbl.osbir.engine.ui.textinputs.DefaultTextField;
 import pl.bbl.osbir.engine.ui.window.TextWindow;
+import pl.bbl.osbir.gameserver.GameServer;
 import pl.bbl.osbir.screens.login.director.LoginDirector;
 
 public class LoginScreenLayout {
     private Stack mainStack;
     private AssetManager assetManager;
     private LoginDirector loginDirector;
+    private Skin skin;
 
     private Table loginComponentsTable;
     private DefaultTextField login;
@@ -38,13 +41,14 @@ public class LoginScreenLayout {
         this.mainStack = mainStack;
         this.assetManager = assetManager;
         this.loginDirector = loginDirector;
-        initializeComponents(skin);
+        this.skin = skin;
+        initializeComponents();
         addChangeListenerToConfirmButton();
         assignComponentsToTable();
         loadBackground();
     }
 
-    private void initializeComponents(Skin skin){
+    private void initializeComponents(){
         loginComponentsTable = new Table();
         login = new DefaultTextField("", skin);
         password = new DefaultTextField("", skin);
@@ -116,6 +120,16 @@ public class LoginScreenLayout {
     public void hideRequestingServerListWindow(){
         windowTable.clearChildren();
         windowTable.removeActor(requestingServersMessageWindow);
+    }
+
+    public void displayGameServerSelection(GameServer[] gameServers){
+        DefaultListDialog defaultListDialog = new DefaultListDialog("", skin, gameServers){
+            @Override
+            protected void result(Object object) {
+                loginDirector.receiveSelectedServer(object);
+            }
+        };
+        windowTable.add(defaultListDialog).width(500).height(300);
     }
 
     public void render(SpriteBatch spriteBatch){

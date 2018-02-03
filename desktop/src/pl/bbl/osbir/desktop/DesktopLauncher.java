@@ -4,6 +4,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
+import pl.bbl.network.tools.LogType;
+import pl.bbl.network.tools.NetworkLogger;
 import pl.bbl.osbir.OsbirGame;
 import pl.bbl.osbir.properties.OsbirProperties;
 
@@ -14,7 +16,8 @@ public class DesktopLauncher {
     private static Settings settings;
 
     public static void main (String[] arg) {
-		settings = new Settings();
+		NetworkLogger.changeWorkingMode(LogType.DEBUG);
+        settings = new Settings();
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
         //startTexturePacker();
