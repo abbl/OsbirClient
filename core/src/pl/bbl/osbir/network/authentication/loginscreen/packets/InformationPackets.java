@@ -1,4 +1,4 @@
-package pl.bbl.osbir.screens.login.network.packets;
+package pl.bbl.osbir.network.authentication.loginscreen.packets;
 
 import pl.bbl.network.packet.Packet;
 

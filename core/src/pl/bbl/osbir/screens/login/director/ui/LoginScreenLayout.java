@@ -32,6 +32,7 @@ public class LoginScreenLayout {
     private TextWindow connectingMessageWindow;
     private TextWindow requestingServersMessageWindow;
     private TextWindow loggingInWindow;
+    private TextWindow connectingToGameSever;
     private TextDialog loginFailureDialog;
 
     private TextureAtlas loginScreenAtlas;
@@ -60,7 +61,8 @@ public class LoginScreenLayout {
         connectingMessageWindow = new TextWindow("", skin, "Connecting...");
         loggingInWindow = new TextWindow("", skin, "Logging in...");
         requestingServersMessageWindow = new TextWindow("", skin, "Requesting server list...");
-        loginFailureDialog = new TextDialog("", skin, "Your authentication credentials are probably wrong.", 500, 150);
+        connectingToGameSever = new TextWindow("", skin, "Connecting to GameServer...");
+        loginFailureDialog = new TextDialog("", skin, "Your authenticationserver credentials are probably wrong.", 500, 150);
     }
 
     private void addChangeListenerToConfirmButton(){
@@ -123,13 +125,18 @@ public class LoginScreenLayout {
     }
 
     public void displayGameServerSelection(GameServer[] gameServers){
-        DefaultListDialog defaultListDialog = new DefaultListDialog("", skin, gameServers){
+        final DefaultListDialog defaultListDialog = new DefaultListDialog("", skin, gameServers){
             @Override
             protected void result(Object object) {
-                loginDirector.receiveSelectedServer(object);
+                loginDirector.receiveSelectedServer(getSelection());
             }
         };
         windowTable.add(defaultListDialog).width(500).height(300);
+    }
+
+    public void displayConnectingToGameServer(){
+        windowTable.clearChildren();
+        windowTable.add(connectingToGameSever).width(500).height(150);
     }
 
     public void render(SpriteBatch spriteBatch){

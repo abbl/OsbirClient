@@ -26,6 +26,6 @@ public class DefaultListDialog extends Dialog{
     }
 
     public Object getSelection(){
-        return list.getSelection();
+        return list.getSelected();
     }
 }

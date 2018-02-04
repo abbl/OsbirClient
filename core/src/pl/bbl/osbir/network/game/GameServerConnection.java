@@ -50,4 +50,8 @@ public class GameServerConnection {
         if(packetDistributor != null)
             packetDistributor.registerPacketReceiver(packetReceiver);
     }
+
+    public GameServer getGameServer() {
+        return gameServer;
+    }
 }

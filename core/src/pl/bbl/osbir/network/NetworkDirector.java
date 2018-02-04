@@ -1,5 +1,6 @@
 package pl.bbl.osbir.network;
 
+import pl.bbl.network.packet.Packet;
 import pl.bbl.network.server.handler.PacketDistributor;
 import pl.bbl.network.server.handler.PacketReceiver;
 import pl.bbl.network.tools.LogType;
@@ -49,6 +50,10 @@ public class NetworkDirector {
         gameServerConnection.start();
     }
 
+    public void sendGameServerPacket(Packet packet){
+        gameServerConnection.sendPacket(packet);
+    }
+
     public void setGameServer(GameServer gameServer){
         gameServerConnection.setGameServer(gameServer);
     }
@@ -59,6 +64,10 @@ public class NetworkDirector {
 
     public boolean isGameServerConnectionEstablished(){
         return gameServerConnection.isConnected();
+    }
+
+    public GameServer getGameServer(){
+        return gameServerConnection.getGameServer();
     }
 
     public void addPacketReceiverIntoGameServer(PacketReceiver packetReceiver){

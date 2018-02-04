@@ -2,24 +2,31 @@ package pl.bbl.osbir.screens.login.director;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import pl.bbl.network.server.handler.PacketDistributor;
 import pl.bbl.osbir.engine.tools.ConditionalTrigger;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
 import pl.bbl.osbir.gameserver.GameServer;
 import pl.bbl.osbir.network.NetworkDirector;
+import pl.bbl.osbir.network.authentication.loginscreen.packets.AuthenticationPackets;
+import pl.bbl.osbir.network.authentication.loginscreen.packets.InformationPackets;
+import pl.bbl.osbir.network.game.loginscreen.packets.VerificationPackets;
+import pl.bbl.osbir.network.game.loginscreen.receivers.TemporaryVerificationReceiver;
+import pl.bbl.osbir.player.Player;
 import pl.bbl.osbir.screens.login.director.ui.LoginScreenLayout;
-import pl.bbl.osbir.screens.login.network.packets.AuthenticationPackets;
-import pl.bbl.osbir.screens.login.network.packets.InformationPackets;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LoginDirector {
     private LoginScreenLayout layout;
+    private Player player;
     private NetworkDirector networkDirector;
 
-    public LoginDirector(Stack mainStack, UserInterfaceManager userInterfaceManager, NetworkDirector networkDirector){
+    public LoginDirector(Stack mainStack, UserInterfaceManager userInterfaceManager, NetworkDirector networkDirector, Player player){
         this.layout = new LoginScreenLayout(mainStack, userInterfaceManager.getSkin(), userInterfaceManager.getAssetManager(), this);
         this.networkDirector = networkDirector;
+        this.player = player;
     }
 
     public void startLoginProcess(String login, String password) {
@@ -39,6 +46,7 @@ public class LoginDirector {
             protected void doSomething() {
                 layout.hideConnectingWindow();
                 requestLogin(login, password);
+                player.setUsername(login);
             }
         };
     }
@@ -52,6 +60,7 @@ public class LoginDirector {
         layout.hideLoggingInWindow();
         if(result){
             layout.displayRequestingServerListWindow();
+            networkDirector.getAuthenticationConnection().sendPacket(AuthenticationPackets.createUserKeyRequestPacket());
             networkDirector.getAuthenticationConnection().sendPacket(InformationPackets.requestGameServerList());
         }else{
             layout.displayLoginFailureDialog();
@@ -70,7 +79,15 @@ public class LoginDirector {
     }
 
     public void receiveSelectedServer(Object object) {
-
+        GameServer selectedGameServer = (GameServer) object;
+        System.out.println("Name:" + selectedGameServer.toString() + "Host:" + selectedGameServer.getHost() + "Port: " + selectedGameServer.getPort());
+        layout.displayConnectingToGameServer();
+        PacketDistributor packetDistributor = new PacketDistributor();
+        packetDistributor.registerPacketReceiver(new TemporaryVerificationReceiver(player));
+        networkDirector.setGameServer(selectedGameServer);
+        networkDirector.setGameServerPacketDistributor(packetDistributor);
+        networkDirector.establishConnectionWithGameServer();
+        networkDirector.sendGameServerPacket(VerificationPackets.createPlayerVerificationPacket(player.getUserKey(), player.getUsername()));
     }
 
     public void render(SpriteBatch spriteBatch){
