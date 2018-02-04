@@ -18,7 +18,6 @@ public class UserInterfaceManager {
     };
     private AssetManager assetManager;
     private Skin skin;
-    private boolean isDependenciesLoadingDone = false;
 
     public UserInterfaceManager(AssetManager assetManager){
         this.assetManager = assetManager;
@@ -53,7 +52,6 @@ public class UserInterfaceManager {
             skin.addRegions(assetManager.get(filePath, TextureAtlas.class));
         }
         skin.load(Gdx.files.internal(UI_SKIN_PATH));
-        isDependenciesLoadingDone = true;
     }
 
     public Skin getSkin() {
@@ -63,6 +61,7 @@ public class UserInterfaceManager {
     public AssetManager getAssetManager() {
         return assetManager;
     }
+
     public void dispose(){
         //TO DO UUUU
     }

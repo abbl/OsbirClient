@@ -32,7 +32,7 @@ public class LoginDirector {
         return new ConditionalTrigger(){
             @Override
             protected boolean isConditionTrue() {
-                return networkDirector.getAuthenticationConnectionWrapper().isConnected();
+                return networkDirector.getAuthenticationConnection().isConnected();
             }
 
             @Override
@@ -45,14 +45,14 @@ public class LoginDirector {
 
     private void requestLogin(String login, String password){
         layout.displayLoggingInWindow();
-        networkDirector.getAuthenticationConnectionWrapper().sendPacket(AuthenticationPackets.createAuthenticationRequestPacket(login, password));
+        networkDirector.getAuthenticationConnection().sendPacket(AuthenticationPackets.createAuthenticationRequestPacket(login, password));
     }
 
     public void receiveAuthenticationResult(boolean result) {
         layout.hideLoggingInWindow();
         if(result){
             layout.displayRequestingServerListWindow();
-            networkDirector.getAuthenticationConnectionWrapper().sendPacket(InformationPackets.requestGameServerList());
+            networkDirector.getAuthenticationConnection().sendPacket(InformationPackets.requestGameServerList());
         }else{
             layout.displayLoginFailureDialog();
             networkDirector.closeAuthenticationConnection();

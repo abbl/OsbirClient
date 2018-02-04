@@ -1,39 +1,67 @@
 package pl.bbl.osbir.network;
 
 import pl.bbl.network.server.handler.PacketDistributor;
+import pl.bbl.network.server.handler.PacketReceiver;
 import pl.bbl.network.tools.LogType;
 import pl.bbl.network.tools.NetworkLogger;
-import pl.bbl.osbir.network.authentication.AuthenticationConnectionWrapper;
+import pl.bbl.osbir.gameserver.GameServer;
+import pl.bbl.osbir.network.authentication.AuthenticationConnection;
+import pl.bbl.osbir.network.game.GameServerConnection;
 
 public class NetworkDirector {
-    private AuthenticationConnectionWrapper authenticationConnectionWrapper;
-    private PacketDistributor authenticationPacketDistributor;
+    private AuthenticationConnection authenticationConnection;
+    private GameServerConnection gameServerConnection;
+
+    public NetworkDirector(){
+        this.authenticationConnection = new AuthenticationConnection();
+        this.gameServerConnection = new GameServerConnection();
+    }
+
+    /*
+     * AuthenticationServer connection
+     */
 
     public void establishAuthenticationServerConnection(){
-        if(authenticationPacketDistributor != null){
-            authenticationConnectionWrapper = new AuthenticationConnectionWrapper(authenticationPacketDistributor);
-            authenticationConnectionWrapper.connect();
-        }else{
-            NetworkLogger.log(LogType.INFO, "[NetworkDirector] Please provide a packet distributor before you start a connection.");
-        }
+        authenticationConnection.connect();
     }
 
     public void closeAuthenticationConnection(){
-        if(authenticationConnectionWrapper != null)
-            authenticationConnectionWrapper.close();
-        else
-            NetworkLogger.log(LogType.INFO, "Can't close connection which doesn't exist.");
+        authenticationConnection.close();
+    }
+
+    public boolean isAutheticationConnectionEstablished(){
+        return authenticationConnection.isConnected();
     }
 
     public void setAuthenticationPacketDistributor(PacketDistributor authenticationPacketDistributor) {
-        this.authenticationPacketDistributor = authenticationPacketDistributor;
+        authenticationConnection.setPacketDistributor(authenticationPacketDistributor);
     }
 
-    public AuthenticationConnectionWrapper getAuthenticationConnectionWrapper(){
-        return authenticationConnectionWrapper;
+    public AuthenticationConnection getAuthenticationConnection(){
+        return authenticationConnection;
     }
 
-    public boolean isConnected() {
-        return authenticationConnectionWrapper.isConnected();
+    /*
+     * GameServer connection
+     */
+
+    public void establishConnectionWithGameServer(){
+        gameServerConnection.start();
+    }
+
+    public void setGameServer(GameServer gameServer){
+        gameServerConnection.setGameServer(gameServer);
+    }
+
+    public void setGameServerPacketDistributor(PacketDistributor gameServerPacketDistributor){
+        gameServerConnection.setPacketDistributor(gameServerPacketDistributor);
+    }
+
+    public boolean isGameServerConnectionEstablished(){
+        return gameServerConnection.isConnected();
+    }
+
+    public void addPacketReceiverIntoGameServer(PacketReceiver packetReceiver){
+        gameServerConnection.addPacketReceiver(packetReceiver);
     }
 }

@@ -15,4 +15,12 @@ public class GameServer {
     public String toString() {
         return name;
     }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
 }
