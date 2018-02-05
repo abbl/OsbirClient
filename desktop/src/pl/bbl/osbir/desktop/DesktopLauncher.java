@@ -20,7 +20,7 @@ public class DesktopLauncher {
         settings = new Settings();
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
-        //startTexturePacker();
+        startTexturePacker();
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = (int) OsbirProperties.getViewportWidth();
         config.height = (int) OsbirProperties.getViewportHeight();
@@ -35,7 +35,7 @@ public class DesktopLauncher {
 
 	private static void packDirectoriesInDirectory(String directoryPath){
         for(String directory : getDirectories(directoryPath)){
-            TexturePacker.process(settings,directoryPath + "/" + directory + "/", "data-topack/" + getDirectoryName(directoryPath) + "/" + directory, directory);
+            TexturePacker.process(settings,directoryPath + "/" + directory + "/",  getDirectoryName(directoryPath) + "/" + directory, directory);
         }
     }
 

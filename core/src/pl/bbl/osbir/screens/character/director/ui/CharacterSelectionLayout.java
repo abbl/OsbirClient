@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import pl.bbl.osbir.engine.actors.TiledTextureActor;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
 import pl.bbl.osbir.screens.character.director.CharacterSelectionDirector;
 
@@ -20,8 +21,9 @@ public class CharacterSelectionLayout {
     private TextureAtlas backgroundAtlas;
     private TextureAtlas characterSelectionAtlas;
     private TextureRegion background;
-    private TextureRegion characterDisplayBorder;
+    private TextureRegion windowBorder;
     private TextureRegion characterDisplayBackground;
+    private TextureRegion smallerWindowBorder;
 
     public CharacterSelectionLayout(Stack actors,  UserInterfaceManager userInterfaceManager, CharacterSelectionDirector characterSelectionDirector){
         this.mainStack = actors;
@@ -41,14 +43,17 @@ public class CharacterSelectionLayout {
         assetManager.load("textures/characterscreen/characterscreen.atlas", TextureAtlas.class);
         assetManager.finishLoading();
         characterSelectionAtlas = assetManager.get("textures/characterscreen/characterscreen.atlas");
-        characterDisplayBorder = characterSelectionAtlas.findRegion("frame");
+        windowBorder = characterSelectionAtlas.findRegion("frame");
+        smallerWindowBorder = characterSelectionAtlas.findRegion("frame-smaller");
         characterDisplayBackground = characterSelectionAtlas.findRegion("characterbackground");
     }
 
     private void createLayout(){
         Table mainTable = new Table();
         mainTable.add(createCharacterDisplay(400, 500));
-        mainTable.add(createBorderImage(300, 500)).pad(15);
+        mainTable.add(createCharacterList(300, 500)).pad(15);
+        mainTable.row();
+        mainTable.add(createOptionMenu(400, 150));
         mainStack.add(mainTable);
     }
 
@@ -62,12 +67,37 @@ public class CharacterSelectionLayout {
         return characterDisplayStack;
     }
 
-    private Stack createCharacterList(){
+    private Stack createCharacterList(float width, float height){
         Stack characterListStack = new Stack();
+        Table characterListTable = new Table();
+        characterListTable.add(new TiledTextureActor(
+                new TextureAtlas.AtlasRegion(characterSelectionAtlas.findRegion("plank"))))
+                .width(width - 10).height(height - 12); //Fitting image inside border.
+        characterListStack.add(characterListTable);
+        characterListStack.add(createBorderImage(width, height));
+        return characterListStack;
+    }
+
+    private Stack createOptionMenu(float width, float height){
+        Stack optionMenuStack = new Stack();
+        Table optionMenuTable = new Table();
+        optionMenuTable.add(new TiledTextureActor(
+                new TextureAtlas.AtlasRegion(characterSelectionAtlas.findRegion("plank"))))
+                .width(width - 10).height(height - 12); //Fitting image inside border.
+        optionMenuStack.add(optionMenuTable);
+        optionMenuStack.add(createSmallerBorderImage(width, height));
+        return optionMenuStack;
     }
 
     private Table createBorderImage(float width, float height){
-        Image borderImage = new Image(characterDisplayBorder);
+        Image borderImage = new Image(windowBorder);
+        Table borderTable = new Table();
+        borderTable.add(borderImage).width(width).height(height);
+        return borderTable;
+    }
+
+    private Table createSmallerBorderImage(float width, float height){
+        Image borderImage = new Image(smallerWindowBorder);
         Table borderTable = new Table();
         borderTable.add(borderImage).width(width).height(height);
         return borderTable;

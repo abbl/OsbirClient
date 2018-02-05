@@ -13,35 +13,42 @@ chain
   index: -1
 characterbackground
   rotate: false
-  xy: 1614, 435
+  xy: 1614, 467
   size: 405, 512
   orig: 405, 512
   offset: 0, 0
   index: -1
 fade
   rotate: false
-  xy: 2, 147
+  xy: 2, 179
   size: 1200, 800
   orig: 1200, 800
   offset: 0, 0
   index: -1
 frame
   rotate: false
-  xy: 1204, 416
+  xy: 1204, 448
   size: 408, 531
   orig: 408, 531
   offset: 0, 0
   index: -1
-plank
+frame-smaller
   rotate: false
   xy: 2, 49
+  size: 408, 128
+  orig: 408, 128
+  offset: 0, 0
+  index: -1
+plank
+  rotate: false
+  xy: 1204, 350
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 1204, 318
+  xy: 412, 81
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
