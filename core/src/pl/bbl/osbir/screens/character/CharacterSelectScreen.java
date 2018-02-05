@@ -9,10 +9,16 @@ import pl.bbl.osbir.player.Player;
 import pl.bbl.osbir.screens.character.director.CharacterSelectionDirector;
 
 public class CharacterSelectScreen extends AbstractScreen{
-    private final NetworkDirector networkDirector;
-    private final Player player;
-    private final UserInterfaceManager userInterfaceManager;
-    private final CharacterSelectionDirector characterSelectionDirector;
+    private NetworkDirector networkDirector;
+    private Player player;
+    private UserInterfaceManager userInterfaceManager;
+    private CharacterSelectionDirector characterSelectionDirector;
+
+    public CharacterSelectScreen(Game game){
+        super(game);
+        userInterfaceManager = new UserInterfaceManager(assetManager);
+        characterSelectionDirector = new CharacterSelectionDirector(actors, userInterfaceManager);
+    }
 
     public CharacterSelectScreen(Game game, AssetManager assetManager, NetworkDirector networkDirector, Player player, UserInterfaceManager userInterfaceManager) {
         super(game);
