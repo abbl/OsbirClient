@@ -20,7 +20,7 @@ public class DesktopLauncher {
         settings = new Settings();
         settings.maxWidth = 2048;
         settings.maxHeight = 2048;
-        startTexturePacker();
+        //startTexturePacker();
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = (int) OsbirProperties.getViewportWidth();
         config.height = (int) OsbirProperties.getViewportHeight();
