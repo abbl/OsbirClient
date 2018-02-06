@@ -1,8 +1,11 @@
 package pl.bbl.osbir.screens.character;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import pl.bbl.osbir.engine.animations.AnimationProperties;
 import pl.bbl.osbir.engine.screen.AbstractScreen;
+import pl.bbl.osbir.engine.serialization.DataSerializer;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
 import pl.bbl.osbir.network.NetworkDirector;
 import pl.bbl.osbir.player.Player;

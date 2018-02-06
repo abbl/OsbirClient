@@ -12,10 +12,15 @@ public class PlayerCharacterButton extends Button{
     private static PlayerCharacter selectedCharacter;
     private PlayerCharacter playerCharacter;
     private Label label;
+    private boolean isLabelPositionSet;
+
+    private static final float labelOffsetX = 5.0f;
+    private static final float labelOffsetY = 50.0f;
 
     public PlayerCharacterButton(Skin skin, PlayerCharacter playerCharacter){
         super(skin, "characterSelect");
         this.playerCharacter = playerCharacter;
+        this.isLabelPositionSet = false;
         this.label = new Label(playerCharacter.toString(), skin);
         addListener(addCharacterSelection());
     }
@@ -32,11 +37,19 @@ public class PlayerCharacterButton extends Button{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        setLabelPosition();
         drawCharacterName(batch, parentAlpha);
     }
 
     private void drawCharacterName(Batch batch, float parentAlpha) {
         label.draw(batch, parentAlpha);
+    }
+
+    private void setLabelPosition(){
+        if(!isLabelPositionSet){
+            label.setPosition(getX() + labelOffsetX, getY() + labelOffsetY);
+            isLabelPositionSet = true;
+        }
     }
 
     public PlayerCharacter getSelectedButton(){

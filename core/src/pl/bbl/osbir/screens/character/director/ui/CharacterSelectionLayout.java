@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import pl.bbl.osbir.engine.actors.TiledTextureActor;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
+import pl.bbl.osbir.engine.ui.buttons.PlayerCharacterButton;
+import pl.bbl.osbir.player.PlayerCharacter;
 import pl.bbl.osbir.screens.character.director.CharacterSelectionDirector;
 
 public class CharacterSelectionLayout {
@@ -21,6 +23,7 @@ public class CharacterSelectionLayout {
     private TextureRegion windowBorder;
     private TextureRegion characterDisplayBackground;
     private TextureRegion smallerWindowBorder;
+    private TextureRegion chain;
 
     public CharacterSelectionLayout(Stack actors,  UserInterfaceManager userInterfaceManager, CharacterSelectionDirector characterSelectionDirector){
         this.mainStack = actors;
@@ -43,6 +46,7 @@ public class CharacterSelectionLayout {
         windowBorder = characterSelectionAtlas.findRegion("frame");
         smallerWindowBorder = characterSelectionAtlas.findRegion("frame-smaller");
         characterDisplayBackground = characterSelectionAtlas.findRegion("characterbackground");
+        chain = characterSelectionAtlas.findRegion("chain");
     }
 
     private void createLayout(){
@@ -71,8 +75,22 @@ public class CharacterSelectionLayout {
                 new TextureAtlas.AtlasRegion(characterSelectionAtlas.findRegion("plank"))))
                 .width(width - 10).height(height - 12); //Fitting image inside border.
         characterListStack.add(characterListTable);
+        characterListStack.add(addCharacterButtons());
         characterListStack.add(createBorderImage(width, height));
         return characterListStack;
+    }
+
+    private Table addCharacterButtons(){
+        PlayerCharacter[] playerCharacters = {new PlayerCharacter("Jezus"), new PlayerCharacter("Chrystus"), new PlayerCharacter("Bejo"), new PlayerCharacter("Maciek")};
+        Table characterButtonsTable = new Table();
+        for(PlayerCharacter playerCharacter : playerCharacters){
+            Table buttonTable = new Table();
+            buttonTable.row();
+            buttonTable.add(new PlayerCharacterButton(skin, playerCharacter));
+            characterButtonsTable.add(buttonTable).pad(15);
+            characterButtonsTable.row();
+        }
+        return characterButtonsTable;
     }
 
     private Stack createOptionMenu(float width, float height){
@@ -98,6 +116,10 @@ public class CharacterSelectionLayout {
         Table borderTable = new Table();
         borderTable.add(borderImage).width(width).height(height);
         return borderTable;
+    }
+
+    private Image createChain(){
+        return new Image(chain);
     }
 
     public void render(SpriteBatch spriteBatch){
