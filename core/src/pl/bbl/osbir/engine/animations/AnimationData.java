@@ -8,14 +8,15 @@ public class AnimationData implements Serializable{
     public String name;
     public String animationAtlasLocation;
     public String animationRegionName;
+    public int frameWidth;
+    public int frameHeight;
 
-    public static class AnimationPartDetails{
+    public static class AnimationPartDetails implements Serializable{
         public String name;
+        public float frameTime;
         public float leftUpperCornerPositionX;
         public float leftUpperCornerPositionY;
-        public float rightLowerCornerPositionX;
-        public float rightLowerCornerPositionY;
-        public int frameWidth;
-        public int frameHeight;
+        public float width;
+        public float height;
     }
 }

@@ -3,9 +3,7 @@ package pl.bbl.osbir.engine.serialization;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class DataSerializer {
     public static void serialize(Object object, String savePath){
@@ -21,7 +19,17 @@ public class DataSerializer {
         }
     }
 
-    public static Object deserialize(){
+    public static Object deserialize(String path){
+        try {
+            FileInputStream fileIn = new FileInputStream(Gdx.files.local(path).file());
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Object parsedObject = in.readObject();
+            in.close();
+            fileIn.close();
+            return parsedObject;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
