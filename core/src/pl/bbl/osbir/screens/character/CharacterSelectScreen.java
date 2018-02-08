@@ -1,7 +1,9 @@
 package pl.bbl.osbir.screens.character;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import pl.bbl.osbir.engine.animations.TextureAnimation;
 import pl.bbl.osbir.engine.screen.AbstractScreen;
 import pl.bbl.osbir.engine.ui.UserInterfaceManager;
 import pl.bbl.osbir.network.NetworkDirector;
@@ -36,6 +38,5 @@ public class CharacterSelectScreen extends AbstractScreen{
 
     @Override
     protected void update() {
-
     }
 }

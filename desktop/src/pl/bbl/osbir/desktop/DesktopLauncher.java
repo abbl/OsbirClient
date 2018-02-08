@@ -7,6 +7,7 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.*;
 import pl.bbl.network.tools.LogType;
 import pl.bbl.network.tools.NetworkLogger;
 import pl.bbl.osbir.OsbirGame;
+import pl.bbl.osbir.engine.tools.AnimationTestDataCreator;
 import pl.bbl.osbir.properties.OsbirProperties;
 
 import java.io.File;

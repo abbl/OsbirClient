@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import pl.bbl.osbir.engine.logger.EngineLogger;
+
+import java.util.ArrayList;
 
 public class AnimationPart {
     private Animation<TextureRegion> animation;
@@ -16,12 +19,16 @@ public class AnimationPart {
     private String name;
     private float x;
     private float y;
+    private int rowsNumber;
+    private int columnsNumber;
 
     public AnimationPart(AnimationData.AnimationPartDetails animationPartDetails, AnimationData animationData, AssetManager assetManager){
         this.animationPartDetails = animationPartDetails;
         this.animationData = animationData;
         this.name = animationPartDetails.name;
         this.assetManager = assetManager;
+        this.x = 0;
+        this.y = 0;
         loadDependencies();
     }
 
@@ -34,18 +41,35 @@ public class AnimationPart {
     }
 
     private void createAnimation(){
-        TextureRegion.split();
+        TextureAtlas textureAtlas = assetManager.get(animationData.animationAtlasLocation, TextureAtlas.class);
+        TextureRegion spriteSheet = textureAtlas.findRegion(animationData.animationRegionName);
+        if(spriteSheet != null){
+            TextureRegion[][] splitedRegion = split(spriteSheet.getTexture(), animationPartDetails.leftUpperCornerPositionX,
+                    animationPartDetails.leftUpperCornerPositionY, animationPartDetails.width, animationPartDetails.height,
+                    animationData.frameWidth, animationData.frameHeight);
+            ArrayList<TextureRegion> frames = new ArrayList<>();
+            int index = 0;
+
+            for(int row = 0; row < rowsNumber; row++)
+                for(int column = 0; column < columnsNumber; column++)
+                    if(index < splitedRegion.length)
+                        frames.add(splitedRegion[row][column]);
+
+            animation = new Animation<>(animationPartDetails.frameTime, frames.toArray(new TextureRegion[frames.size()]));
+        }else{
+            EngineLogger.log("Animation: [" + animationPartDetails.name + "] has no region called " + animationData.animationRegionName);
+        }
     }
 
     private TextureRegion[][] split (Texture texture, int x, int y, int width, int height, int tileWidth, int tileHeight) {
-        int rows = height / tileHeight;
-        int cols = width / tileWidth;
+        rowsNumber = height / tileHeight;
+        columnsNumber = width / tileWidth;
 
         int startX = x;
-        TextureRegion[][] tiles = new TextureRegion[rows][cols];
-        for (int row = 0; row < rows; row++, y += tileHeight) {
+        TextureRegion[][] tiles = new TextureRegion[rowsNumber][columnsNumber];
+        for (int row = 0; row < rowsNumber; row++, y += tileHeight) {
             x = startX;
-            for (int col = 0; col < cols; col++, x += tileWidth) {
+            for (int col = 0; col < columnsNumber; col++, x += tileWidth) {
                 tiles[row][col] = new TextureRegion(texture, x, y, tileWidth, tileHeight);
             }
         }
@@ -60,7 +84,8 @@ public class AnimationPart {
     }
 
     private void isAnimationAtlasLoaded(){
-        if(assetManager.isLoaded(animationData.animationAtlasLocation) && animation == null)
+        if(animation == null)
+            if(assetManager.isLoaded(animationData.animationAtlasLocation))
             createAnimation();
     }
 
@@ -71,7 +96,7 @@ public class AnimationPart {
 
     public void render(SpriteBatch spriteBatch) {
         if(animation != null)
-            spriteBatch.draw(animation.getKeyFrame(stateTime), 0, 0);
+            spriteBatch.draw(animation.getKeyFrame(stateTime, true), x, y);
     }
 
     public void setPosition(float x, float y){
