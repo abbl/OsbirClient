@@ -11,6 +11,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
         confirm: { down: confirm-checked, up: confirm},
         characterSelect: {down: character-selection, up: character-selection},
         start: { down: start, up: start},
+		minus: { down: minus-checked, up: minus},
+		plus: {down: plus-checked, up: plus},
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { font: default-font, background: default-input, fontColor: white },

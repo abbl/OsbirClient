@@ -25,6 +25,20 @@ confirm-checked
   orig: 500, 300
   offset: 0, 0
   index: -1
+minus
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+minus-checked
+  rotate: false
+  xy: 196, 85
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 play
   rotate: false
   xy: 504, 151
@@ -39,9 +53,23 @@ play-checked
   orig: 500, 300
   offset: 0, 0
   index: -1
+plus
+  rotate: false
+  xy: 68, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+plus-checked
+  rotate: false
+  xy: 262, 85
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 start
   rotate: false
-  xy: 2, 2
+  xy: 328, 85
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

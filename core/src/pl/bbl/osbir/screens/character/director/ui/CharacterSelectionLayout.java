@@ -96,11 +96,16 @@ public class CharacterSelectionLayout {
     private Stack createOptionMenu(float width, float height){
         Stack optionMenuStack = new Stack();
         Table optionMenuTable = new Table();
+        Table buttonTable = new Table();
         optionMenuTable.add(new TiledTextureActor(
                 new TextureAtlas.AtlasRegion(characterSelectionAtlas.findRegion("plank"))))
                 .width(width - 10).height(height - 12); //Fitting image inside border.
         optionMenuStack.add(optionMenuTable);
         optionMenuStack.add(createSmallerBorderImage(width, height));
+        buttonTable.add(new Button(skin, "start")).width(128).height(96);
+        buttonTable.add(new Button(skin, "plus")).width(64).height(64).pad(32);
+        buttonTable.add(new Button(skin, "minus")).width(64).height(64);
+        optionMenuStack.add(buttonTable);
         return optionMenuStack;
     }
 
